@@ -12,7 +12,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('/saveUser', [UserController::class, 'store']);
+Route::post('/addNewUser', [UserController::class, 'store']);
 Route::get('/getAllUsers', [UserController::class, 'index']);
 
 Route::get('/greeting', function () {
