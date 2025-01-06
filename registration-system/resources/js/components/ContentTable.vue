@@ -35,10 +35,10 @@ import RecordRow from "../components/RecordRow.vue";
             </div>
         </div>
 
-        <div v-if="users" v-for="(user, index) in users" :key="index">
+        <div v-if="allUsers" v-for="(user, index) in allUsers" :key="index">
             <!-- Show single user record -->
             <RecordRow
-                :id="user.id || ''"
+                :id="user.id || 0"
                 :name="user.first_name + ' ' + (user.last_name || '')"
                 :phoneNumber="user.phone_number"
                 :email="user.email"
@@ -87,14 +87,32 @@ export default {
             allUsers: [],
         };
     },
+    watch: {
+        searchedUsers: {
+            handler(newValue) {
+                if (newValue.length) {
+                    this.allUsers = [];
+                    this.$nextTick(() => (this.allUsers = this.searchedUsers));
+                } else {
+                    this.allUsers = [];
+                    this.$nextTick(() => (this.allUsers = this.users));
+                }
+            },
+            deep: true,
+        },
+        users: {
+            handler() {
+                this.allUsers = this.users;
+            },
+            immediate: true,
+            deep: true,
+        },
+    },
     computed: {
-        ...mapState(useUserStore, ["users"]),
+        ...mapState(useUserStore, ["users", "searchedUsers"]),
     },
     mounted() {
         this.userStore = useUserStore();
-        this.allUsers = this.users;
-        console.log("All users2: ", this.allUsers);
-        
     },
     methods: {
         editNewUserOpenIds(id, isOpened) {
@@ -132,15 +150,15 @@ export default {
             this.sortEndDateAscending = !this.sortEndDateAscending;
         },
         sortByName() {
-            // this.toggleFirstNameSort();
-            // let allUsers = this.allUsers;
-            // this.userStore.setAllUsers([]);
-            // this.$nextTick(() =>
-            //     this.userStore.sortUsersByFirstName(
-            //         allUsers,
-            //         this.sortFirstNameAscending
-            //     )
-            // );
+            this.toggleFirstNameSort();
+            let allUsers = this.allUsers;
+            this.userStore.setAllUsers([]);
+            this.$nextTick(() =>
+                this.userStore.sortUsersByFirstName(
+                    allUsers,
+                    this.sortFirstNameAscending
+                )
+            );
         },
     },
 };

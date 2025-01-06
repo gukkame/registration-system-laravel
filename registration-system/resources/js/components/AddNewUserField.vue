@@ -119,11 +119,21 @@ export default {
         this.userStore = useUserStore();
     },
     methods: {
+        resetState() {
+            this.firstName = "";
+            this.lastName = "";
+            this.email = "";
+            this.phoneNumber = "+371";
+            this.subscriptionType = "-";
+            this.startDate = null;
+            this.endDate = null;
+            this.errorMessage = null;
+        },
         submit() {
-            // if (this.validateEmailAndSubscriptionType()) {
-            this.addNewUser();
-            this.$emit("submit", false);
-            // }
+            if (this.validateEmailAndSubscriptionType()) {
+                this.addNewUser();
+                this.$emit("submit", false);
+            }
         },
         cancel() {
             this.$emit("submit", false);
@@ -157,8 +167,8 @@ export default {
                 .post("api/addNewUser", formData)
                 .then((res) => {
                     console.log("New user added: ", res.data);
-
                     this.userStore.addNewUser(res.data.user);
+                    this.resetState()
                 })
                 .catch((error) => {
                     console.error("Error at adding new user: " + error);

@@ -14,6 +14,8 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/addNewUser', [UserController::class, 'store']);
 Route::get('/getAllUsers', [UserController::class, 'index']);
+Route::delete('/deleteUser/{id}', [UserController::class, 'destroy']);
+Route::put('/editUser/{id}', [UserController::class, 'update']);
 
 Route::get('/greeting', function () {
     return 'Hello World 2';

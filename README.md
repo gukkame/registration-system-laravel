@@ -12,7 +12,7 @@ Make sure you have the following installed:
 
 1. **Clone the repository:**
     ```sh
-    git clone https://github.com/gukkame/vue-laravel-template.git
+    git clone https://github.com/gukkame/registration-system-laravel.git
     cd registration-system
     ```
 

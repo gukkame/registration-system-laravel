@@ -56,10 +56,14 @@ class User extends Authenticatable
      */
     public function getDaysTillEndOfSubAttribute()
     {
-
         $endDate = \Carbon\Carbon::parse($this->end_date);
         $currentDate = \Carbon\Carbon::now();
         $daysTillEnd = $endDate->diffInDays($currentDate, true, true);
+        
+        if ($endDate->isPast() && !$endDate->isToday()) {
+            return $daysTillEnd = 0;
+        }
+
         return floor($daysTillEnd + 1);
     }
 
