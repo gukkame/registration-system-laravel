@@ -13,7 +13,7 @@ Make sure you have the following installed:
 1. **Clone the repository:**
     ```sh
     git clone https://github.com/gukkame/vue-laravel-template.git
-    cd laravel-php-template
+    cd registration-system
     ```
 
 2. **Install PHP dependencies:**

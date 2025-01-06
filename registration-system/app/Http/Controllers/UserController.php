@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
-    
+
     public function show($id)
     {
         // Find the user by id
